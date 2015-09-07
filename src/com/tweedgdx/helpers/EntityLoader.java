@@ -2,42 +2,34 @@ package com.tweedgdx.helpers;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 
 import java.util.ArrayList;
 
 
-public class EntityLoader{
+public class EntityLoader extends ConfigLoader{
     private Engine entityEngine;
     private EntityFactory entityFactory;
 
-    public EntityLoader(Engine entityEngine, EntityFactory entityFactory){
+    public EntityLoader(Engine entityEngine, EntityFactory entityFactory, String configLocation){
         this.entityEngine = entityEngine;
         this.entityFactory = entityFactory;
+        this.configLocation = configLocation;
+        this.load();
     }
 
-    public void loadAndProcess(String configLocation){
-        ArrayList<JsonValue> config = this.load(configLocation);
-        this.process(config);
-    }
-
-    private ArrayList<JsonValue> load(String configLocation){
-        ArrayList<JsonValue> config = new ArrayList<JsonValue>();
-
-        if(!Gdx.files.internal(configLocation).exists()){
-            Gdx.app.error("CONFIG", configLocation+" does NOT exist.");
-        }else{
-            Json json = new Json();
-            config = json.fromJson(ArrayList.class, Gdx.files.local(configLocation));
+    public void loadAndProcess(){
+        this.load();
+        if(this.config != null){
+            this.process();
         }
-
-        return config;
     }
 
-    private void process(ArrayList<JsonValue> config){
-        for(JsonValue entityInstructions : config){
-            this.entityEngine.addEntity(entityFactory.create(entityInstructions));
+    private void process(){
+        if(this.config.get("entities").isArray()) {
+            for (JsonValue entityInstructions : this.config.get("entities")) {
+                this.entityEngine.addEntity(entityFactory.create(entityInstructions));
+            }
         }
     }
 }
