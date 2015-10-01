@@ -15,7 +15,7 @@ public class ScriptComponent extends Component{
         this.scriptLocations.add(scriptLocation);
     }
 
-    ScriptComponent(ArrayList<String> scriptLocations){
+    public ScriptComponent(ArrayList<String> scriptLocations){
         this.scriptLocations = scriptLocations;
     }
 

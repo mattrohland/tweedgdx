@@ -12,28 +12,15 @@ import com.tweedgdx.helpers.BaseShapesFactory;
 
 public class PhysicsSystem extends IteratingSystem{
 
-    /*
-    * Public Variables
-    */
-
     public World world;
-
-    /*
-    * Private Variables
-    */
 
     private ComponentMapper<AliasComponent> aliasComponentMapper = ComponentMapper.getFor(AliasComponent.class);
     private ComponentMapper<PositionComponent> positionComponentMapper = ComponentMapper.getFor(PositionComponent.class);
     private ComponentMapper<PhysicsBodyComponent> physicsBodyComponentMapper = ComponentMapper.getFor(PhysicsBodyComponent.class);
 
-    private Engine entityEngine;
     private PhysicsEntityListener physicsEntityListener;
     private static final float worldTimeStep = 1 / 30f;
     private float worldAccumulator = 0f;
-
-    /*
-    * Public Methods
-    */
 
     public PhysicsSystem(){
         super(Family.getFor(PhysicsBodyComponent.class));
@@ -43,19 +30,18 @@ public class PhysicsSystem extends IteratingSystem{
     public void addedToEngine(Engine entityEngine){
         super.addedToEngine(entityEngine);
 
-        this.entityEngine = entityEngine;
         this.world = new World(new Vector2(0, 0), true);
         this.physicsEntityListener = new PhysicsEntityListener();
 
         // Start Listening
-        this.entityEngine.addEntityListener(this.physicsEntityListener);
+        entityEngine.addEntityListener(this.physicsEntityListener);
     }
 
     @Override
     public void removedFromEngine(Engine entityEngine){
         super.removedFromEngine(entityEngine);
 
-        this.entityEngine.removeEntityListener(this.physicsEntityListener);
+        entityEngine.removeEntityListener(this.physicsEntityListener);
         this.world.dispose();
     }
 
@@ -144,13 +130,11 @@ public class PhysicsSystem extends IteratingSystem{
         Shape shape = null;
 
         if(physicsBodyComponent.shape.equals(Shapes.QUADRILATERAL)){
-            shape = BaseShapesFactory.createQuadrilateral(physicsBodyComponent.width,physicsBodyComponent.height);
+            shape = BaseShapesFactory.createQuadrilateral(physicsBodyComponent.width, physicsBodyComponent.height);
         }
 
         return shape;
     }
-
-
 
     private class PhysicsEntityListener implements EntityListener{
         public void entityAdded(Entity entity) {

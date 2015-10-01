@@ -7,6 +7,7 @@ import com.badlogic.gdx.Input;
 import com.tweedgdx.components.AliasComponent;
 import com.tweedgdx.components.PhysicsBodyComponent;
 import com.tweedgdx.components.PositionComponent;
+import com.tweedgdx.components.RenderComponent;
 import com.tweedgdx.components.ScriptComponent;
 import com.tweedgdx.systems.CameraSystem;
 import com.tweedgdx.systems.InputSystem;
@@ -87,12 +88,14 @@ public class ScriptHandlerLua implements ScriptHandlerInterface {
             public LuaValue position;
             public LuaValue physicsBody;
             public LuaValue alias;
+            public LuaValue render;
             public LuaValue script;
 
             EntityComponentsContext(Entity entity){
                 this.alias = CoerceJavaToLua.coerce(entity.getComponent(AliasComponent.class));
                 this.physicsBody = CoerceJavaToLua.coerce(entity.getComponent(PhysicsBodyComponent.class));
                 this.position = CoerceJavaToLua.coerce(entity.getComponent(PositionComponent.class));
+                this.render = CoerceJavaToLua.coerce(entity.getComponent(RenderComponent.class));
                 this.script = CoerceJavaToLua.coerce(entity.getComponent(ScriptComponent.class));
             }
         }
