@@ -10,10 +10,16 @@ public class ConfigLoader{
     protected String configLocation;
     public JsonValue config;
 
-    public ConfigLoader(){}
+    public ConfigLoader(){
+    }
 
     public ConfigLoader(String configLocation){
         this.configLocation = configLocation;
+        this.load();
+    }
+
+    public ConfigLoader(JsonValue config){
+        this.config = config;
     }
 
     public void load(){
