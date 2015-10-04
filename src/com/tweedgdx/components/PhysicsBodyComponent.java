@@ -32,8 +32,6 @@ public class PhysicsBodyComponent extends Component{
             && instructions.get("type") != null
             && instructions.get("shape") != null
             && instructions.get("density") != null
-            && instructions.get("friction") != null
-            && instructions.get("restitution") != null
         ){
             entity.add(
                 new PhysicsBodyComponent(
@@ -42,8 +40,8 @@ public class PhysicsBodyComponent extends Component{
                     instructions.getFloat("width"),
                     instructions.getFloat("height"),
                     instructions.getFloat("density"),
-                    instructions.getFloat("friction"),
-                    instructions.getFloat("restitution")
+                    instructions.getFloat("friction", 0),
+                    instructions.getFloat("restitution", 0)
                 )
             );
         }

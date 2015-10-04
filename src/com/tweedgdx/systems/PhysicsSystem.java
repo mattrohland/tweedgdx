@@ -2,6 +2,7 @@ package com.tweedgdx.systems;
 
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.tweedgdx.components.AliasComponent;
@@ -68,6 +69,7 @@ public class PhysicsSystem extends IteratingSystem{
         if(positionComponent != null){
             positionComponent.x = physicsBodyComponent.body.getPosition().x;
             positionComponent.y = physicsBodyComponent.body.getPosition().y;
+            positionComponent.yaw = physicsBodyComponent.body.getAngle() * MathUtils.radiansToDegrees;
         }
     }
 

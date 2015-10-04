@@ -9,10 +9,15 @@ public class PositionComponent extends Component{
     public float x = 0.0f;
     public float y = 0.0f;
     public float z = 0.0f;
+    public float yaw = 0.0f;
+
+    public PositionComponent(float x, float y, float z, float yaw){
+        this(x, y, z);
+        this.yaw = yaw;
+    }
 
     public PositionComponent(float x, float y, float z){
-        this.x = x;
-        this.y = y;
+        this(x, y);
         this.z = z;
     }
 
