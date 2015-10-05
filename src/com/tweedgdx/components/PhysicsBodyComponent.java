@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.JsonValue;
 
 
-public class PhysicsBodyComponent extends Component{
+public class PhysicsBodyComponent implements Component {
     public String type; // Options include: DYNAMIC, KINEMATIC, STATIC ...
     public String shape; // Options include: QUADRILATERAL, CIRCLE ...
     public float width;

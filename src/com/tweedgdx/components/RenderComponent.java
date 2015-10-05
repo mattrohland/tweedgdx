@@ -7,7 +7,7 @@ import com.tweedgdx.helpers.DrawableInterface;
 import java.util.ArrayList;
 
 
-public class RenderComponent extends Component{
+public class RenderComponent implements Component {
     public String targettedBlockAlias;
     public JsonValue config;
     public ArrayList<DrawableInterface> drawables;

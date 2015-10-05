@@ -17,7 +17,7 @@ public class ScriptSystem extends IteratingSystem{
     private ScriptEntityListener scriptEntityListener;
 
     public ScriptSystem(){
-        super(Family.getFor(ScriptComponent.class));
+        super(Family.all(ScriptComponent.class).get());
     }
 
     @Override
@@ -27,7 +27,7 @@ public class ScriptSystem extends IteratingSystem{
         this.scriptEntityListener = new ScriptEntityListener();
 
         // Start Listening
-        this.entityEngine.addEntityListener(Family.getFor(ScriptComponent.class), this.scriptEntityListener);
+        this.entityEngine.addEntityListener(Family.all(ScriptComponent.class).get(), 200, this.scriptEntityListener);
     }
 
     @Override

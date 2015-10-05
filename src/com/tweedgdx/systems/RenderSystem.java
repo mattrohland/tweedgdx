@@ -96,7 +96,7 @@ public class RenderSystem extends IntervalSystem{
         private ComponentMapper<RenderComponent> renderComponentMapper = ComponentMapper.getFor(RenderComponent.class);
 
         public RenderableEntitiesManagementSystem(){
-            super(Family.getFor(RenderComponent.class));
+            super(Family.all(RenderComponent.class).get());
         }
 
         @Override
@@ -104,7 +104,7 @@ public class RenderSystem extends IntervalSystem{
             super.addedToEngine(entityEngine);
 
             this.renderableEntityListener = new RenderableEntityListener();
-            entityEngine.addEntityListener(this.renderableEntityListener);
+            entityEngine.addEntityListener(500, this.renderableEntityListener);
         }
 
         @Override

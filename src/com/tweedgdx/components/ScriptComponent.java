@@ -7,16 +7,20 @@ import com.tweedgdx.helpers.ScriptHandlerLua;
 import java.util.ArrayList;
 
 
-public class ScriptComponent extends Component{
-    public ArrayList<String> scriptLocations = new ArrayList<String>();
+public class ScriptComponent implements Component {
+    public ArrayList<String> scriptLocations;
     public ArrayList<ScriptHandlerLua> scripts = new ArrayList<ScriptHandlerLua>();
+    public JsonValue data;
 
-    public ScriptComponent(String scriptLocation){
+    public ScriptComponent(String scriptLocation, JsonValue data){
+        this.scriptLocations = new ArrayList<String>();
         this.scriptLocations.add(scriptLocation);
+        this.data = data;
     }
 
-    public ScriptComponent(ArrayList<String> scriptLocations){
+    public ScriptComponent(ArrayList<String> scriptLocations, JsonValue data){
         this.scriptLocations = scriptLocations;
+        this.data = data;
     }
 
     public static void addComponentToEntity(JsonValue instructions, Entity entity){
@@ -24,7 +28,7 @@ public class ScriptComponent extends Component{
             instructions != null
             && instructions.get("location") != null
         ){
-            entity.add(new ScriptComponent(instructions.getString("location")));
+            entity.add(new ScriptComponent(instructions.getString("location"), instructions.get("data")));
         }
     }
 }

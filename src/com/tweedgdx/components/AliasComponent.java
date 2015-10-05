@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.utils.JsonValue;
 
 
-public class AliasComponent extends Component{
+public class AliasComponent implements Component {
     public String alias;
 
     public AliasComponent(String alias){

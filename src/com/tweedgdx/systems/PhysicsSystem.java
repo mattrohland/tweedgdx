@@ -24,7 +24,7 @@ public class PhysicsSystem extends IteratingSystem{
     private float worldAccumulator = 0f;
 
     public PhysicsSystem(){
-        super(Family.getFor(PhysicsBodyComponent.class));
+        super(Family.all(PhysicsBodyComponent.class).get());
     }
 
     @Override
@@ -35,7 +35,7 @@ public class PhysicsSystem extends IteratingSystem{
         this.physicsEntityListener = new PhysicsEntityListener();
 
         // Start Listening
-        entityEngine.addEntityListener(this.physicsEntityListener);
+        entityEngine.addEntityListener(100, this.physicsEntityListener);
     }
 
     @Override
