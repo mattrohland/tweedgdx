@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.utils.JsonValue;
 import com.tweedgdx.components.ScriptComponent;
 import com.tweedgdx.helpers.ScriptHandlerLua;
 
@@ -15,9 +16,11 @@ public class ScriptSystem extends IteratingSystem{
     private ComponentMapper<ScriptComponent> scriptComponentMapper = ComponentMapper.getFor(ScriptComponent.class);
     private Engine entityEngine;
     private ScriptEntityListener scriptEntityListener;
+    private JsonValue instructions;
 
-    public ScriptSystem(){
+    public ScriptSystem(JsonValue instructions){
         super(Family.all(ScriptComponent.class).get());
+        this.instructions = instructions;
     }
 
     @Override

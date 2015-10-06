@@ -5,6 +5,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.JsonValue;
 import com.tweedgdx.components.AliasComponent;
 import com.tweedgdx.components.PhysicsBodyComponent;
 import com.tweedgdx.components.PositionComponent;
@@ -22,9 +23,11 @@ public class PhysicsSystem extends IteratingSystem{
     private PhysicsEntityListener physicsEntityListener;
     private static final float worldTimeStep = 1 / 30f;
     private float worldAccumulator = 0f;
+    private JsonValue instructions;
 
-    public PhysicsSystem(){
+    public PhysicsSystem(JsonValue instructions){
         super(Family.all(PhysicsBodyComponent.class).get());
+        this.instructions = instructions;
     }
 
     @Override
