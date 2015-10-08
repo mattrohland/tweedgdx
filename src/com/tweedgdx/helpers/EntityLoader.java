@@ -6,16 +6,16 @@ import com.badlogic.gdx.utils.JsonValue;
 
 public class EntityLoader extends ConfigLoader{
     private Engine entityEngine;
-    private EntityFactory entityFactory;
+    private EntityFactoryInterface entityFactory;
 
-    public EntityLoader(Engine entityEngine, EntityFactory entityFactory, String configLocation){
+    public EntityLoader(Engine entityEngine, EntityFactoryInterface entityFactory, String configLocation){
         this.entityEngine = entityEngine;
         this.entityFactory = entityFactory;
         this.configLocation = configLocation;
         this.load();
     }
 
-    public EntityLoader(Engine entityEngine, EntityFactory entityFactory, JsonValue config){
+    public EntityLoader(Engine entityEngine, EntityFactoryInterface entityFactory, JsonValue config){
         this.entityEngine = entityEngine;
         this.entityFactory = entityFactory;
         this.config = config;

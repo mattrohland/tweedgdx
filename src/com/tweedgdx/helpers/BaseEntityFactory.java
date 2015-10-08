@@ -9,7 +9,7 @@ import com.tweedgdx.components.RenderComponent;
 import com.tweedgdx.components.ScriptComponent;
 
 
-public class BaseEntityFactory implements EntityFactory{
+public class BaseEntityFactory implements EntityFactoryInterface{
     public Entity create(JsonValue entityInstructions){
         Entity entity = new Entity();
 

@@ -4,6 +4,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.utils.JsonValue;
 
 
-public interface EntityFactory{
+public interface EntityFactoryInterface{
     public Entity create(JsonValue entityInstructions);
 }
