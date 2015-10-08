@@ -24,10 +24,12 @@ public class PhysicsSystem extends IteratingSystem{
     private static final float worldTimeStep = 1 / 30f;
     private float worldAccumulator = 0f;
     private JsonValue instructions;
+    private float pixelToMeterRatio = 0.01f;
 
     public PhysicsSystem(JsonValue instructions){
         super(Family.all(PhysicsBodyComponent.class).get());
         this.instructions = instructions;
+        this.pixelToMeterRatio = instructions.getFloat("pixelToMeterRatio", this.pixelToMeterRatio);
     }
 
     @Override
@@ -70,10 +72,22 @@ public class PhysicsSystem extends IteratingSystem{
 
         // Update positions
         if(positionComponent != null){
-            positionComponent.x = physicsBodyComponent.body.getPosition().x;
-            positionComponent.y = physicsBodyComponent.body.getPosition().y;
+            positionComponent.x = this.getInPixels(physicsBodyComponent.body.getPosition().x);
+            positionComponent.y = this.getInPixels(physicsBodyComponent.body.getPosition().y);
             positionComponent.yaw = physicsBodyComponent.body.getAngle() * MathUtils.radiansToDegrees;
         }
+    }
+
+    /*
+    * Public Helper Methods
+    */
+
+    public float getInMeters(float pixels){
+        return pixels*pixelToMeterRatio;
+    }
+
+    public float getInPixels(float meters){
+        return meters/pixelToMeterRatio;
     }
 
     /*
@@ -106,7 +120,7 @@ public class PhysicsSystem extends IteratingSystem{
         }
 
         // Set Body Position
-        bodyDef.position.set(new Vector2(positionComponent.x, positionComponent.y));
+        bodyDef.position.set(new Vector2(PhysicsSystem.this.getInMeters(positionComponent.x), PhysicsSystem.this.getInMeters(positionComponent.y)));
 
         physicsBodyComponent.body = world.createBody(bodyDef);
         createFixtureForPhysicalBodyComponent(physicsBodyComponent);
@@ -135,7 +149,7 @@ public class PhysicsSystem extends IteratingSystem{
         Shape shape = null;
 
         if(physicsBodyComponent.shape.equals(Shapes.QUADRILATERAL)){
-            shape = BaseShapesFactory.createQuadrilateral(physicsBodyComponent.width, physicsBodyComponent.height);
+            shape = BaseShapesFactory.createQuadrilateral(PhysicsSystem.this.getInMeters(physicsBodyComponent.width), PhysicsSystem.this.getInMeters(physicsBodyComponent.height));
         }
 
         return shape;

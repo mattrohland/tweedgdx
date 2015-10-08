@@ -20,11 +20,14 @@ public class SpriteRenderBlock implements RenderBlockInterface{
     private JsonValue instructions;
     private OrthographicCamera camera;
     private ComponentMapper<RenderComponent> renderComponentMapper = ComponentMapper.getFor(RenderComponent.class);
+    private Engine entityEngine;
 
-    protected SpriteBatch batch = new SpriteBatch();
+    protected SpriteBatch batch;
     protected ComponentMapper<PositionComponent> positionComponentMapper = ComponentMapper.getFor(PositionComponent.class);
 
     public SpriteRenderBlock(Engine entityEngine, JsonValue instructions){
+        this.batch = new SpriteBatch();
+        this.entityEngine = entityEngine;
         this.instructions = instructions;
         this.camera = entityEngine.getSystem(CameraSystem.class).camera;
     }

@@ -37,6 +37,5 @@ public class CameraSystem extends EntitySystem{
     public void resize(float width, float height){
         this.camera.viewportWidth = width;
         this.camera.viewportHeight = height;
-        this.camera.position.set(this.camera.viewportWidth / 2f, this.camera.viewportHeight / 2f, 0);
     }
 }
