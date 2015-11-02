@@ -67,7 +67,7 @@ public class ScriptHandlerLua implements ScriptHandlerInterface {
     private LuaValue[] createScriptContext(Entity entity){
         return new LuaValue[]{
             CoerceJavaToLua.coerce(new EntityContext(entity)),
-            CoerceJavaToLua.coerce(new GdxContext())
+            CoerceJavaToLua.coerce(new GameContext())
         };
     }
 
@@ -117,10 +117,11 @@ public class ScriptHandlerLua implements ScriptHandlerInterface {
 
     }
 
-    private class GdxContext{
-        public LuaValue app = CoerceJavaToLua.coerce(Gdx.app);
-        public LuaValue input = CoerceJavaToLua.coerce(Gdx.input);
-        public LuaValue inputKeys = CoerceJavaToLua.coerce(new Input.Keys());
-        public LuaValue graphics = CoerceJavaToLua.coerce(Gdx.graphics);
+    private class GameContext{
+        public LuaValue gdxApp = CoerceJavaToLua.coerce(Gdx.app);
+        public LuaValue gdxInput = CoerceJavaToLua.coerce(Gdx.input);
+        public LuaValue gdxInputKeys = CoerceJavaToLua.coerce(new Input.Keys());
+        public LuaValue gdxGraphics = CoerceJavaToLua.coerce(Gdx.graphics);
+        public LuaValue entityFactory = CoerceJavaToLua.coerce(new BaseEntityFactory());
     }
 }

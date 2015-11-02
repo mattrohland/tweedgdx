@@ -104,7 +104,7 @@ public class RenderSystem extends IntervalSystem{
             super.addedToEngine(entityEngine);
 
             this.renderableEntityListener = new RenderableEntityListener();
-            entityEngine.addEntityListener(500, this.renderableEntityListener);
+            entityEngine.addEntityListener(Family.all(RenderComponent.class).get(), 500, this.renderableEntityListener);
         }
 
         @Override

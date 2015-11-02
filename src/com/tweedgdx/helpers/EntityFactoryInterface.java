@@ -5,5 +5,6 @@ import com.badlogic.gdx.utils.JsonValue;
 
 
 public interface EntityFactoryInterface{
+    public Entity create(String entityInstructionsJsonString);
     public Entity create(JsonValue entityInstructions);
 }

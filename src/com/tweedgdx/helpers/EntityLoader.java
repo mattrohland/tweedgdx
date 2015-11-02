@@ -21,11 +21,9 @@ public class EntityLoader extends ConfigLoader{
         this.config = config;
     }
 
-    public void process(){
-        if(this.config.isArray()) {
-            for (JsonValue entityInstructions : this.config) {
-                this.entityEngine.addEntity(entityFactory.create(entityInstructions));
-            }
+    public void load(String entityKey){
+        if(this.config.get(entityKey).isObject()) {
+            this.entityEngine.addEntity(entityFactory.create(this.config.get(entityKey)));
         }
     }
 }

@@ -40,7 +40,7 @@ public class PhysicsSystem extends IteratingSystem{
         this.physicsEntityListener = new PhysicsEntityListener();
 
         // Start Listening
-        entityEngine.addEntityListener(100, this.physicsEntityListener);
+        entityEngine.addEntityListener(Family.all(PhysicsBodyComponent.class).get(), 100, this.physicsEntityListener);
     }
 
     @Override
@@ -83,7 +83,17 @@ public class PhysicsSystem extends IteratingSystem{
     */
 
     public float getInMeters(float pixels){
-        return pixels*pixelToMeterRatio;
+        return pixels*this.pixelToMeterRatio;
+    }
+
+    public float[] getInMeters(float[] pixelsArray){
+        float[] metersArray = new float[pixelsArray.length];
+
+        for (int i=0; i<pixelsArray.length; i++){
+            metersArray[i] = this.getInMeters(pixelsArray[i]);
+        }
+
+        return metersArray;
     }
 
     public float getInPixels(float meters){
@@ -104,6 +114,8 @@ public class PhysicsSystem extends IteratingSystem{
 
     private final class Shapes{
         public static final String QUADRILATERAL = "QUADRILATERAL";
+        public static final String CIRCLE = "CIRCLE";
+        public static final String POLYGON = "POLYGON";
 
         private Shapes(){}
     }
@@ -150,6 +162,10 @@ public class PhysicsSystem extends IteratingSystem{
 
         if(physicsBodyComponent.shape.equals(Shapes.QUADRILATERAL)){
             shape = BaseShapesFactory.createQuadrilateral(PhysicsSystem.this.getInMeters(physicsBodyComponent.width), PhysicsSystem.this.getInMeters(physicsBodyComponent.height));
+        }else if(physicsBodyComponent.shape.equals(Shapes.CIRCLE)){
+            shape = BaseShapesFactory.createCircle(PhysicsSystem.this.getInMeters(physicsBodyComponent.width));
+        }else if(physicsBodyComponent.shape.equals(Shapes.POLYGON)){
+            shape = BaseShapesFactory.createPolygon(PhysicsSystem.this.getInMeters(physicsBodyComponent.vertices));
         }
 
         return shape;

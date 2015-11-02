@@ -11,34 +11,43 @@ public class PhysicsBodyComponent implements Component {
     public String shape; // Options include: QUADRILATERAL, CIRCLE ...
     public float width;
     public float height;
+    public float[] vertices;
     public float density;
     public float friction;
     public float restitution;
     public Body body;
 
-    public PhysicsBodyComponent(String type, String shape, float width, float height, float density, float friction, float restitution){
+    public PhysicsBodyComponent(String type, String shape, float width, float height, float[] vertices, float density, float friction, float restitution){
         this.type = type;
         this.shape = shape;
         this.width = width;
         this.height = height;
+        this.vertices = vertices;
         this.density = density;
         this.friction = friction;
         this.restitution = restitution;
     }
 
     public static void addComponentToEntity(JsonValue instructions, Entity entity){
+        float[] vertices = new float[0];
+
         if(
             instructions != null
             && instructions.get("type") != null
             && instructions.get("shape") != null
             && instructions.get("density") != null
         ){
+            if(instructions.get("vertices") != null && instructions.get("vertices").isArray()){
+                vertices = instructions.get("vertices").asFloatArray();
+            }
+
             entity.add(
                 new PhysicsBodyComponent(
                     instructions.getString("type"),
                     instructions.getString("shape"),
-                    instructions.getFloat("width"),
-                    instructions.getFloat("height"),
+                    instructions.getFloat("width", instructions.getFloat("height", 0)),
+                    instructions.getFloat("height", instructions.getFloat("width")),
+                    vertices,
                     instructions.getFloat("density"),
                     instructions.getFloat("friction", 0),
                     instructions.getFloat("restitution", 0)
