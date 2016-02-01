@@ -20,7 +20,7 @@ import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import org.luaj.vm2.lib.jse.JsePlatform;;
 
 
-public class ScriptHandlerLua implements ScriptHandlerInterface {
+public class ScriptHandlerLua implements ScriptHandlerInterface{
 
     private Globals globals = JsePlatform.standardGlobals();
     private LuaValue scriptFileContentRaw;

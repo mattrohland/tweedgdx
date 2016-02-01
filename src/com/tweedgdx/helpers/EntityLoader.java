@@ -1,6 +1,7 @@
 package com.tweedgdx.helpers;
 
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.utils.JsonValue;
 
 
@@ -21,9 +22,11 @@ public class EntityLoader extends ConfigLoader{
         this.config = config;
     }
 
-    public void load(String entityKey){
-        if(this.config.get(entityKey).isObject()) {
-            this.entityEngine.addEntity(entityFactory.create(this.config.get(entityKey)));
-        }
+    public Entity load(String entityKey){
+        Entity entity = entityFactory.create(this.config.get(entityKey));
+
+        this.entityEngine.addEntity(entity);
+
+        return entity;
     }
 }

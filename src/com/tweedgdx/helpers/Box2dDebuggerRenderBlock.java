@@ -25,7 +25,7 @@ public class Box2dDebuggerRenderBlock implements RenderBlockInterface{
         this.camera = this.entityEngine.getSystem(CameraSystem.class).camera;
 
         // Debug Box2d
-        this.debugRenderer = new Box2DDebugRenderer(true, true, true, true, true, true);
+        this.debugRenderer = new Box2DDebugRenderer(true, true, false, true, true, true);
 
     }
 
