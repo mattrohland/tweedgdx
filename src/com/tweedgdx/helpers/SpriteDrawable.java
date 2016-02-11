@@ -12,6 +12,7 @@ import com.tweedgdx.components.PositionComponent;
 public class SpriteDrawable implements DrawableInterface {
     private Sprite sprite;
     private JsonValue instructions;
+    private boolean drawEnabled=false;
 
     public SpriteDrawable(JsonValue instructions){
         this.instructions = instructions;
@@ -43,11 +44,12 @@ public class SpriteDrawable implements DrawableInterface {
         // Set rotation.
         this.sprite.setOriginCenter();
         this.sprite.setRotation(positionComponent.yaw);
+        this.drawEnabled = true;
     }
 
     @Override
     public void draw(RenderBlockInterface renderBlock) {
-        this.sprite.draw(((SpriteRenderBlock) renderBlock).batch);
+        if(this.drawEnabled) this.sprite.draw(((SpriteRenderBlock) renderBlock).batch);
     }
 
 }
