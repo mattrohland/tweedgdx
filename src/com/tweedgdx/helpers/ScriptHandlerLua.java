@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.tweedgdx.components.AliasComponent;
+import com.tweedgdx.components.MetaComponent;
 import com.tweedgdx.components.PhysicsBodyComponent;
 import com.tweedgdx.components.PositionComponent;
 import com.tweedgdx.components.RenderComponent;
@@ -112,7 +112,7 @@ public class ScriptHandlerLua implements ScriptHandlerInterface{
             public LuaValue script;
 
             EntityComponentsContext(Entity entity){
-                this.alias = CoerceJavaToLua.coerce(entity.getComponent(AliasComponent.class));
+                this.alias = CoerceJavaToLua.coerce(entity.getComponent(MetaComponent.class));
                 this.physicsBody = CoerceJavaToLua.coerce(entity.getComponent(PhysicsBodyComponent.class));
                 this.position = CoerceJavaToLua.coerce(entity.getComponent(PositionComponent.class));
                 this.render = CoerceJavaToLua.coerce(entity.getComponent(RenderComponent.class));

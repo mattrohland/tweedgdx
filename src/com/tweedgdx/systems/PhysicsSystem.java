@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.JsonValue;
-import com.tweedgdx.components.AliasComponent;
+import com.tweedgdx.components.MetaComponent;
 import com.tweedgdx.components.PhysicsBodyComponent;
 import com.tweedgdx.components.PositionComponent;
 import com.tweedgdx.helpers.BaseShapesFactory;
@@ -16,7 +16,7 @@ public class PhysicsSystem extends IteratingSystem{
 
     public World world;
 
-    private ComponentMapper<AliasComponent> aliasComponentMapper = ComponentMapper.getFor(AliasComponent.class);
+    private ComponentMapper<MetaComponent> metaComponentMapper = ComponentMapper.getFor(MetaComponent.class);
     private ComponentMapper<PositionComponent> positionComponentMapper = ComponentMapper.getFor(PositionComponent.class);
     private ComponentMapper<PhysicsBodyComponent> physicsBodyComponentMapper = ComponentMapper.getFor(PhysicsBodyComponent.class);
 
@@ -66,7 +66,7 @@ public class PhysicsSystem extends IteratingSystem{
 
     @Override
     protected void processEntity(Entity entity, float deltaTime){
-        AliasComponent aliasComponent = this.aliasComponentMapper.get(entity);
+        MetaComponent metaComponent = this.metaComponentMapper.get(entity);
         PhysicsBodyComponent physicsBodyComponent = this.physicsBodyComponentMapper.get(entity);
         PositionComponent positionComponent = this.positionComponentMapper.get(entity);
 
