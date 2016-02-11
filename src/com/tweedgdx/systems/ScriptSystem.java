@@ -15,6 +15,9 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.tweedgdx.components.ScriptComponent;
 import com.tweedgdx.helpers.ScriptHandlerLua;
 
+import org.luaj.vm2.LuaValue;
+import org.luaj.vm2.lib.jse.CoerceJavaToLua;
+
 
 public class ScriptSystem extends IteratingSystem{
 
@@ -86,7 +89,9 @@ public class ScriptSystem extends IteratingSystem{
             ScriptComponent scriptComponent = ScriptSystem.this.scriptComponentMapper.get(this.entity);
 
             for(ScriptHandlerLua script : scriptComponent.scripts){
-                script.call("beginContact");
+                script.call("beginContact", new LuaValue[]{
+                    CoerceJavaToLua.coerce(contact)
+                });
             }
         }
 
@@ -95,7 +100,9 @@ public class ScriptSystem extends IteratingSystem{
             ScriptComponent scriptComponent = ScriptSystem.this.scriptComponentMapper.get(this.entity);
 
             for(ScriptHandlerLua script : scriptComponent.scripts){
-                script.call("endContact");
+                script.call("endContact", new LuaValue[]{
+                    CoerceJavaToLua.coerce(contact)
+                });
             }
         }
 
@@ -104,7 +111,10 @@ public class ScriptSystem extends IteratingSystem{
             ScriptComponent scriptComponent = ScriptSystem.this.scriptComponentMapper.get(this.entity);
 
             for(ScriptHandlerLua script : scriptComponent.scripts){
-                script.call("preSolve");
+                script.call("preSolve", new LuaValue[]{
+                    CoerceJavaToLua.coerce(contact),
+                    CoerceJavaToLua.coerce(oldManifold)
+                });
             }
         }
 
@@ -113,7 +123,10 @@ public class ScriptSystem extends IteratingSystem{
             ScriptComponent scriptComponent = ScriptSystem.this.scriptComponentMapper.get(this.entity);
 
             for(ScriptHandlerLua script : scriptComponent.scripts){
-                script.call("postSolve");
+                script.call("postSolve", new LuaValue[]{
+                    CoerceJavaToLua.coerce(contact),
+                    CoerceJavaToLua.coerce(impulse)
+                });
             }
         }
 

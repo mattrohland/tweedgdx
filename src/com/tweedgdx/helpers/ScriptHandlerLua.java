@@ -56,6 +56,26 @@ public class ScriptHandlerLua implements ScriptHandlerInterface{
     }
 
     @Override
+    public void call(String methodName, LuaValue[] additionalContext){
+        LuaValue method = globals.get(methodName);
+        LuaValue[] arguments = new LuaValue[this.context.length+additionalContext.length];
+
+        for(int i=0; i<this.context.length; i++){
+            arguments[i] = this.context[i];
+        }
+
+        if(additionalContext.length > 0){
+            for (int i=0; i<additionalContext.length; i++){
+                arguments[i+this.context.length] = additionalContext[i];
+            }
+        }
+
+        if(method.isfunction()){
+            method.invoke(arguments);
+        }
+    }
+
+    @Override
     public void call(String methodName){
         LuaValue method = globals.get(methodName);
 

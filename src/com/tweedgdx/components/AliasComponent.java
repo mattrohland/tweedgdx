@@ -13,9 +13,8 @@ public class AliasComponent implements Component {
     }
 
     public static void addComponentToEntity(JsonValue instructions, Entity entity){
-        if(instructions != null && instructions.get(0) != null){
-            entity.add(new AliasComponent(instructions.getString(0)));
+        if(instructions != null && instructions.get("alias") != null){
+            entity.add(new AliasComponent(instructions.getString("alias")));
         }
     }
-
 }
