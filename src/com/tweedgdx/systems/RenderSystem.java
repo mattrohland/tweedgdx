@@ -14,10 +14,11 @@ import com.tweedgdx.components.RenderComponent;
 import com.tweedgdx.helpers.Box2dDebuggerRenderBlock;
 import com.tweedgdx.helpers.RenderBlockInterface;
 import com.tweedgdx.helpers.SpriteRenderBlock;
+
 import java.util.LinkedHashMap;
 
 
-public class RenderSystem extends IntervalSystem{
+public class RenderSystem extends IntervalSystem {
 
     private RenderableEntitiesManagementSystem renderableEntitiesManagementSystem;
     private JsonValue instructions;
@@ -25,23 +26,23 @@ public class RenderSystem extends IntervalSystem{
     protected LinkedHashMap<String, RenderBlockInterface> renderBlocks;
 
     public RenderSystem(JsonValue instructions) {
-        super(instructions.getFloat("renderInterval", (1f/60f)));
+        super(instructions.getFloat("renderInterval", (1f / 60f)));
         this.instructions = instructions;
         this.cleanSlate();
     }
 
     @Override
-    public void addedToEngine(Engine entityEngine){
+    public void addedToEngine(Engine entityEngine) {
         // Setup renderBlocks based on the instructions.
-        if(this.instructions.get("renderBlocks").isArray()){
+        if (this.instructions.get("renderBlocks").isArray()) {
             this.renderBlocks = new LinkedHashMap<String, RenderBlockInterface>();
 
-            for(int i=0; i<this.instructions.get("renderBlocks").size; i++){
+            for (int i = 0; i < this.instructions.get("renderBlocks").size; i++) {
                 String type = this.instructions.get("renderBlocks").get(i).getString("type");
 
-                if(type.equals("sprite")){
+                if (type.equals("sprite")) {
                     this.renderBlocks.put(this.instructions.get("renderBlocks").get(i).getString("alias"), new SpriteRenderBlock(entityEngine, this.instructions));
-                }else if(type.equals("box2dDebugger")){
+                } else if (type.equals("box2dDebugger")) {
                     this.renderBlocks.put(this.instructions.get("renderBlocks").get(i).getString("alias"), new Box2dDebuggerRenderBlock(entityEngine, this.instructions));
                 }
 
@@ -63,7 +64,7 @@ public class RenderSystem extends IntervalSystem{
     }
 
     @Override
-    protected void updateInterval(){
+    protected void updateInterval() {
         /*
          The RenderSystem's updateInterval() method draws the renderBlocks in the established order.
 
@@ -71,12 +72,12 @@ public class RenderSystem extends IntervalSystem{
          */
 
         this.cleanSlate();
-        for(String key : this.renderBlocks.keySet()){
+        for (String key : this.renderBlocks.keySet()) {
             this.renderBlocks.get(key).draw();
         }
     }
 
-    protected void cleanSlate(){
+    protected void cleanSlate() {
         /*
          The following method renders a solid black screen.
 
@@ -87,7 +88,7 @@ public class RenderSystem extends IntervalSystem{
         Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
     }
 
-    private class RenderableEntitiesManagementSystem extends IteratingSystem{
+    private class RenderableEntitiesManagementSystem extends IteratingSystem {
         /*
          This allows entities to be managed and maintained within the context of their specified render block.
          */
@@ -95,12 +96,12 @@ public class RenderSystem extends IntervalSystem{
         private EntityListener renderableEntityListener;
         private ComponentMapper<RenderComponent> renderComponentMapper = ComponentMapper.getFor(RenderComponent.class);
 
-        public RenderableEntitiesManagementSystem(){
+        public RenderableEntitiesManagementSystem() {
             super(Family.all(RenderComponent.class).get());
         }
 
         @Override
-        public void addedToEngine(Engine entityEngine){
+        public void addedToEngine(Engine entityEngine) {
             super.addedToEngine(entityEngine);
 
             this.renderableEntityListener = new RenderableEntityListener();
@@ -108,25 +109,25 @@ public class RenderSystem extends IntervalSystem{
         }
 
         @Override
-        public void removedFromEngine(Engine entityEngine){
+        public void removedFromEngine(Engine entityEngine) {
             super.removedFromEngine(entityEngine);
 
             entityEngine.removeEntityListener(this.renderableEntityListener);
         }
 
         @Override
-        protected void processEntity(Entity entity, float deltaTime){
+        protected void processEntity(Entity entity, float deltaTime) {
             RenderBlockInterface renderBlock = RenderSystem.this.renderBlocks.get(this.renderComponentMapper.get(entity).targettedBlockAlias);
             renderBlock.processEntity(entity, deltaTime);
         }
 
-        private class RenderableEntityListener implements EntityListener{
-            public void entityAdded(Entity entity){
+        private class RenderableEntityListener implements EntityListener {
+            public void entityAdded(Entity entity) {
                 RenderBlockInterface renderBlock = RenderSystem.this.renderBlocks.get(RenderableEntitiesManagementSystem.this.renderComponentMapper.get(entity).targettedBlockAlias);
                 renderBlock.addEntity(entity);
             }
 
-            public void entityRemoved(Entity entity){
+            public void entityRemoved(Entity entity) {
                 RenderBlockInterface renderBlock = RenderSystem.this.renderBlocks.get(RenderableEntitiesManagementSystem.this.renderComponentMapper.get(entity).targettedBlockAlias);
                 renderBlock.removeEntity(entity);
             }

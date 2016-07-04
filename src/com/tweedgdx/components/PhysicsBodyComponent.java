@@ -15,9 +15,10 @@ public class PhysicsBodyComponent implements Component {
     public float density;
     public float friction;
     public float restitution;
+    public boolean bullet;
     public Body body;
 
-    public PhysicsBodyComponent(String type, String shape, float width, float height, float[] vertices, float density, float friction, float restitution){
+    public PhysicsBodyComponent(String type, String shape, float width, float height, float[] vertices, float density, float friction, float restitution, boolean bullet) {
         this.type = type;
         this.shape = shape;
         this.width = width;
@@ -26,18 +27,19 @@ public class PhysicsBodyComponent implements Component {
         this.density = density;
         this.friction = friction;
         this.restitution = restitution;
+        this.bullet = bullet;
     }
 
-    public static void addComponentToEntity(JsonValue instructions, Entity entity){
+    public static void addComponentToEntity(JsonValue instructions, Entity entity) {
         float[] vertices = new float[0];
 
-        if(
+        if (
             instructions != null
-            && instructions.get("type") != null
-            && instructions.get("shape") != null
-            && instructions.get("density") != null
-        ){
-            if(instructions.get("vertices") != null && instructions.get("vertices").isArray()){
+                && instructions.get("type") != null
+                && instructions.get("shape") != null
+                && instructions.get("density") != null
+            ) {
+            if (instructions.get("vertices") != null && instructions.get("vertices").isArray()) {
                 vertices = instructions.get("vertices").asFloatArray();
             }
 
@@ -50,7 +52,8 @@ public class PhysicsBodyComponent implements Component {
                     vertices,
                     instructions.getFloat("density"),
                     instructions.getFloat("friction", 0),
-                    instructions.getFloat("restitution", 0)
+                    instructions.getFloat("restitution", 0),
+                    instructions.getBoolean("bullet", false)
                 )
             );
         }

@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 
-public class SpriteRenderBlock implements RenderBlockInterface{
+public class SpriteRenderBlock implements RenderBlockInterface {
     private ArrayList<Entity> entities = new ArrayList<Entity>();
     private JsonValue instructions;
     private OrthographicCamera camera;
@@ -25,7 +25,7 @@ public class SpriteRenderBlock implements RenderBlockInterface{
     protected SpriteBatch batch;
     protected ComponentMapper<PositionComponent> positionComponentMapper = ComponentMapper.getFor(PositionComponent.class);
 
-    public SpriteRenderBlock(Engine entityEngine, JsonValue instructions){
+    public SpriteRenderBlock(Engine entityEngine, JsonValue instructions) {
         this.batch = new SpriteBatch();
         this.entityEngine = entityEngine;
         this.instructions = instructions;
@@ -33,11 +33,11 @@ public class SpriteRenderBlock implements RenderBlockInterface{
     }
 
     @Override
-    public void draw(){
+    public void draw() {
         this.batch.setProjectionMatrix(this.camera.combined);
         this.batch.begin();
-        for(int i=0; i<this.entities.size(); i++){
-            for(int j=0; j<this.renderComponentMapper.get(this.entities.get(i)).drawables.size(); j++){
+        for (int i = 0; i < this.entities.size(); i++) {
+            for (int j = 0; j < this.renderComponentMapper.get(this.entities.get(i)).drawables.size(); j++) {
                 this.renderComponentMapper.get(this.entities.get(i)).drawables.get(j).draw(this);
             }
         }
@@ -45,10 +45,10 @@ public class SpriteRenderBlock implements RenderBlockInterface{
     }
 
     @Override
-    public void addEntity(Entity entity){
+    public void addEntity(Entity entity) {
         RenderComponent renderComponent = this.renderComponentMapper.get(entity);
-        if(renderComponent.config.has("drawables") && renderComponent.config.get("drawables").isArray()){
-            for(int i=0; i<renderComponent.config.get("drawables").size; i++){
+        if (renderComponent.config.has("drawables") && renderComponent.config.get("drawables").isArray()) {
+            for (int i = 0; i < renderComponent.config.get("drawables").size; i++) {
                 renderComponent.drawables.add(new SpriteDrawable(renderComponent.config.get("drawables").get(i)));
             }
         }
@@ -57,31 +57,31 @@ public class SpriteRenderBlock implements RenderBlockInterface{
     }
 
     @Override
-    public void removeEntity(Entity entity){
+    public void removeEntity(Entity entity) {
         this.entities.remove(entity);
     }
 
     @Override
-    public void processEntity(Entity entity, float deltaTime){
-        for(int i=0; i<this.renderComponentMapper.get(entity).drawables.size(); i++) {
+    public void processEntity(Entity entity, float deltaTime) {
+        for (int i = 0; i < this.renderComponentMapper.get(entity).drawables.size(); i++) {
             this.renderComponentMapper.get(entity).drawables.get(i).update(this, entity, deltaTime);
         }
     }
 
-    private void sortEntities(){
+    private void sortEntities() {
         /*
          Entities within a SpriteRenderBlock are sorted according to their z coordinate.
 
          "It's like 3D man!"
          */
-        Collections.sort(this.entities, new Comparator<Entity>(){
+        Collections.sort(this.entities, new Comparator<Entity>() {
             @Override
             public int compare(Entity entity1, Entity entity2) {
-            return (
-                SpriteRenderBlock.this.positionComponentMapper.get(entity1).z < SpriteRenderBlock.this.positionComponentMapper.get(entity2).z ? -1
-                : SpriteRenderBlock.this.positionComponentMapper.get(entity1).z > SpriteRenderBlock.this.positionComponentMapper.get(entity2).z ? 1
-                : 0
-            );
+                return (
+                    SpriteRenderBlock.this.positionComponentMapper.get(entity1).z < SpriteRenderBlock.this.positionComponentMapper.get(entity2).z ? -1
+                        : SpriteRenderBlock.this.positionComponentMapper.get(entity1).z > SpriteRenderBlock.this.positionComponentMapper.get(entity2).z ? 1
+                        : 0
+                );
             }
         });
     }

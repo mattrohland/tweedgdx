@@ -1,6 +1,6 @@
 package com.tweedgdx.helpers;
 
-public class PhysicsBodyImpulse{
+public class PhysicsBodyImpulse {
     public float impulseX;
     public float impulseY;
     public float pointX;

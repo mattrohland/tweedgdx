@@ -7,14 +7,15 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonValue;
 import com.tweedgdx.components.PositionComponent;
+import com.tweedgdx.systems.PhysicsSystem;
 
 
 public class SpriteDrawable implements DrawableInterface {
     private Sprite sprite;
     private JsonValue instructions;
-    private boolean drawEnabled=false;
+    private boolean drawEnabled = false;
 
-    public SpriteDrawable(JsonValue instructions){
+    public SpriteDrawable(JsonValue instructions) {
         this.instructions = instructions;
 
         Texture texture = new Texture(Gdx.files.internal(this.instructions.getString("textureImageFile")));
@@ -30,7 +31,7 @@ public class SpriteDrawable implements DrawableInterface {
     }
 
     @Override
-    public void update(RenderBlockInterface renderBlock, Entity entity, float deltaTime){
+    public void update(RenderBlockInterface renderBlock, Entity entity, float deltaTime) {
         PositionComponent positionComponent = ((SpriteRenderBlock) renderBlock).positionComponentMapper.get(entity);
 
         // Set position and size.
@@ -43,13 +44,13 @@ public class SpriteDrawable implements DrawableInterface {
 
         // Set rotation.
         this.sprite.setOriginCenter();
-        this.sprite.setRotation(positionComponent.yaw);
+        this.sprite.setRotation(PhysicsSystem.getInDegrees(positionComponent.yaw));
         this.drawEnabled = true;
     }
 
     @Override
     public void draw(RenderBlockInterface renderBlock) {
-        if(this.drawEnabled) this.sprite.draw(((SpriteRenderBlock) renderBlock).batch);
+        if (this.drawEnabled) this.sprite.draw(((SpriteRenderBlock) renderBlock).batch);
     }
 
 }

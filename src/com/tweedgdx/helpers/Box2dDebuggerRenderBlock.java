@@ -10,7 +10,7 @@ import com.tweedgdx.systems.CameraSystem;
 import com.tweedgdx.systems.PhysicsSystem;
 
 
-public class Box2dDebuggerRenderBlock implements RenderBlockInterface{
+public class Box2dDebuggerRenderBlock implements RenderBlockInterface {
     public Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
     public JsonValue instructions;
 

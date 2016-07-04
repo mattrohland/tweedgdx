@@ -6,18 +6,18 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.JsonValue;
 
 
-public class CameraSystem extends EntitySystem{
+public class CameraSystem extends EntitySystem {
     private Engine entityEngine;
 
     public OrthographicCamera camera;
     public JsonValue instructions;
 
-    public CameraSystem(JsonValue instructions){
+    public CameraSystem(JsonValue instructions) {
         this.instructions = instructions;
     }
 
     @Override
-    public void addedToEngine(Engine entityEngine){
+    public void addedToEngine(Engine entityEngine) {
         super.addedToEngine(entityEngine);
 
         this.entityEngine = entityEngine;
@@ -27,14 +27,14 @@ public class CameraSystem extends EntitySystem{
     }
 
     @Override
-    public void update(float deltaTime){
+    public void update(float deltaTime) {
         super.update(deltaTime);
 
         // Update Camera
         this.camera.update();
     }
 
-    public void resize(float width, float height){
+    public void resize(float width, float height) {
         this.camera.viewportWidth = width;
         this.camera.viewportHeight = height;
     }

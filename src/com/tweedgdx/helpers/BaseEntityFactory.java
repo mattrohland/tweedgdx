@@ -10,12 +10,13 @@ import com.tweedgdx.components.RenderComponent;
 import com.tweedgdx.components.ScriptComponent;
 
 
-public class BaseEntityFactory implements EntityFactoryInterface{
-    public Entity create(String entityInstructionsJsonString){
+public class BaseEntityFactory implements EntityFactoryInterface {
+
+    public Entity create(String entityInstructionsJsonString) {
         return this.create(new JsonReader().parse(entityInstructionsJsonString));
     }
 
-    public Entity create(JsonValue entityInstructions){
+    public Entity create(JsonValue entityInstructions) {
         Entity entity = new Entity();
 
         MetaComponent.addComponentToEntity(entityInstructions.get("MetaComponent"), entity);
